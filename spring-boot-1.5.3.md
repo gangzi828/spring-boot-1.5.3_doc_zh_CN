@@ -2232,6 +2232,160 @@ Deployment completed successfully. axelfontaine/myapp:1.0 is up and running at h
 这里有篇[在EC2部署Spring Boot应用](https://boxfuse.com/blog/spring-boot-ec2.html)的博客，Boxfuse官网也有[Boxfuse集成Spring Boot文档](https://boxfuse.com/docs/payloads/springboot.html)，你可以拿来作为参考。
 ### 58.6 Google App Engine
 Google App Engine与Servlet 2.5 API绑定在一起，因此您无法在某些情况下部署Spring应用程序。 请参阅本指南的Servlet 2.5部分。
+##59 安装Spring Boot应用
+除了使用java -jar运行Spring Boot应用程序外，还可以为Unix系统完成可执行的应用程序。 这使得在常见的生产环境中安装和管理Spring Boot应用程序非常容易。
+
+要使用Maven创建“完全可执行”的jar，请使用以下插件配置：
+
+```
+<plugin>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-maven-plugin</artifactId>
+    <configuration>
+        <executable>true</executable>
+    </configuration>
+</plugin>
+```
+使用Gradle，等效配置将是：
+
+```
+springBoot {
+    executable = true
+}
+```
+然后，您可以通过键入./my-application.jar（其中my-application是您的工件的名称）来运行应用程序。
+
+> 完全可执行的jar通过在文件的前面嵌入一个额外的脚本来工作。 并不是所有的工具目前都接受这种格式，所以你可能并不总是能够使用这种技术。 
+> 默认脚本支持大多数Linux发行版，并在CentOS和Ubuntu上进行测试。 其他平台，如OS X和FreeBSD，将需要使用自定义的嵌入式LunchScript。 
+> 当运行完全可执行的jar时，它将使用jar的目录作为工作目录。
+
+### 59.1 Unix/Linux服务
+你可以使用`init.d`或`systemd`启动Spring Boot应用，就像其他Unix/Linux服务那样。
+#### 59.1.1 安装为init.d服务(System V)
+如果您配置了Spring Boot的Maven或Gradle插件来生成完全可执行的jar，并且您没有使用自定义的embeddedLaunchScript，那么您的应用程序可以用作init.d服务。 简单地将jar链接到init.d以支持标准的start，stop，restart和status命令。
+
+该脚本支持以下功能：
+
+* 以拥有该jar文件的用户启动服务
+* 使用/var/run/<appname>/<appname>.pid跟踪应用程序的PID
+* 将控制台日志写入/var/log/<appname>.log
+
+
+假设你在`/var/myapp`目录安装了一个Spring Boot应用，只需要建立符号连接就能将Spring Boot应用安装成`init.d`服务：
+```
+$ sudo ln -s /var/myapp/myapp.jar /etc/init.d/myapp
+```
+一旦安装成功，你就可以像平常那样启动和停止服务，例如，在一个基于Debian的系统：
+
+```
+$ service myapp start
+```
+> 如果应用启动失败，检查下`/var/log/<appname>.log`中的错误日志。
+
+你也可以标识应用使用标准的操作系统工具自启动，例如，在Debian上：
+
+```
+$ update-rc.d myapp defaults <priority>
+```
+##### 保护init.d服务
+> 以下是关于如何保护作为init.d服务运行的Spring引导应用程序的一组指导。 它并不是为了强化应用程序和运行环境而应该做的所有事情的详尽列表。
+
+当使用`root`用户启动`init.d`服务时，默认的执行脚本将以拥有该jar文件的用户来运行应用。你最好不要使用`root`启动Spring Boot应用，也就是你的应用jar文件拥有者不能是`root`，而是创建一个特定用户运行应用，并使用`chown`指定该用户拥有jar文件，示例：
+
+```
+$ chown bootapp:bootapp your-app.jar
+```
+本示例中，默认执行脚本将使用`bootapp`用户运行应用。
+
+你也要采取措施防止修改应用jar文件，首先配置jar文件权限只能被拥有者读取和执行，不能写入：
+
+```
+$ chmod 500 your-app.jar
+```
+然后，你也应该采取措施限制应用或账号运行时的冲突造成的损坏。如果攻击者获取访问权，他们可能会让jar文件可写并改变它的内容，使用`chattr`让它变为不可变是唯一的保护措施：
+
+```
+$ sudo chattr +i your-app.jar
+```
+
+这会防止任何用户修改jar文件，包括root。
+
+如果root用户用来控制应用服务，并且你使用[.conf文件](http://docs.spring.io/spring-boot/docs/1.4.1.RELEASE/reference/htmlsingle/#deployment-script-customization-conf-file)自定义它的启动，该`.conf`文件将被root用户读取和评估，因此它也需要保护。使用`chmod`改变文件权限只能被拥有者读取，然后使用`chown`改变文件拥有者为root：
+
+```
+$ chmod 400 your-app.conf
+$ sudo chown root:root your-app.conf
+```
+
+#### 59.1.2 安装为Systemd服务
+Systemd是System V init系统的继任者，很多现代Linux分发版本都在使用，尽管你可以继续使用`init.d`脚本，但使用`systemd` ‘service’脚本启动Spring Boot应用是有可能的。
+
+假设你在`/var/myapp`目录下安装一个Spring Boot应用，为了将它安装为一个`systemd`服务，你需要按照以下示例创建一个脚本，比如命名为`myapp.service`，然后将它放到`/etc/systemd/system`目录下：
+
+```
+[Unit]
+Description=myapp
+After=syslog.target
+
+[Service]
+User=myapp
+ExecStart=/var/myapp/myapp.jar
+SuccessExitStatus=143
+
+[Install]
+WantedBy=multi-user.target
+```
+
+> 记得根据你的应用改变`Description`，`User`和`ExecStart`字段。 
+> 请注意，ExecStart字段不声明脚本操作命令，这意味着默认情况下使用run命令。
+
+注意跟作为`init.d`服务运行不同，使用`systemd`这种方式运行应用，PID文件和控制台日志文件表现是不同的，必须在‘service’脚本配置正确的字段，具体参考[service unit configuration man page](http://www.freedesktop.org/software/systemd/man/systemd.service.html)。
+
+```
+$ systemctl enable myapp.service
+```
+
+有关详细信息，请参阅man systemctl。
+
+#### 59.1.3 自定义启动脚本
+Maven或Gradle插件生成的默认内嵌启动脚本可以通过很多方法自定义，对于大多数开发者，使用默认脚本和一些自定义脚本通常就足够了。如果发现不能自定义需要的东西，你可以使用`embeddedLaunchScript`选项生成自己的文件。
+
+###### 在脚本生成时自定义
+
+自定义写入jar文件的启动脚本元素是有意义的，例如，为`init.d`脚本提供`description`，既然知道这会展示到前端，你可能会在生成jar时提供它。
+
+为了自定义写入的元素，你需要为Spring Boot Maven或Gradle插件指定`embeddedLaunchScriptProperties`选项。
+
+以下是默认脚本支持的可代替属性：
+
+名称|描述
+----|---
+mode|脚本模式，默认为`auto`
+
+在脚本运行时自定义
+对于需要在jar文件生成后自定义的项目，你可以使用环境变量或配置文件。
+
+默认脚本支持以下环境变量：
+
+
+
+
+#### 59.2 Microsoft Windows服务
+在Window上，你可以使用[winsw](https://github.com/kohsuke/winsw)启动Spring Boot应用。这里有个单独维护的[示例](https://github.com/snicoll-scratches/spring-boot-daemon)为你演示了怎么一步步为Spring Boot应用创建Windows服务。
+
+
+
+
+
+
+
+
+
+## 60 接下来阅读什么
+打开[Cloud Foundry](http://www.cloudfoundry.com/)，[Heroku](https://www.heroku.com/)，[OpenShift](https://www.openshift.com/)和[Boxfuse](https://boxfuse.com/)网站获取更多Paas能提供的特性信息。这里只提到4个比较流行的Java PaaS提供商，由于Spring Boot遵从基于云的部署原则，所以你也可以自由考虑其他提供商。
+
+下章节将继续讲解[Spring Boot CLI](http://docs.spring.io/spring-boot/docs/1.5.3.RELEASE/reference/htmlsingle/#cli)，你也可以直接跳到[build tool plugins](http://docs.spring.io/spring-boot/docs/1.5.3.RELEASE/reference/htmlsingle/#build-tool-plugins)。
+
 # 第七部分 spring boot命令行客户端工具（CLI）
 # 第八部分 spring boot 构建工具插件
 # 第九部分 How-to参考手册
