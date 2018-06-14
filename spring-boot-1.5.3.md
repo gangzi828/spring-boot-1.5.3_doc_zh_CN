@@ -7,6 +7,129 @@
 
 声明：这个本人业余时间的翻译作品，任何组织和个人不得以商业利益进行非法传播。如有翻译不正确之处，请多多指正，喷子请远离。若您对本翻译计划感兴趣，欢迎您的加入，共同为开源界做贡献。
 
+<center> 目录</center>
+# 第一部分 spring boot 文档结构
+## 1.关于此文档
+## 2.获取帮助
+## 3.第一步
+## 4.使用spring boot
+## 5.学习spring boot 特性
+## 6.生产环境
+## 7.spring boot 高级话题
+# 第二部分 spring boot 入门
+## 8.spring boot 简介
+## 9.系统环境要求
+### 9.1 Servlet 容器
+# 10.安装spring boot
+### 10.1 开发者安装指南
+#### 10.1.1 Maven 安装
+#### 10.1.2 Gradle 安装
+### 10.2 安装spring boot CLI
+#### 10.2.1 手动安装CLI
+#### 10.2.2 使用SDKMAN安装
+#### 10.2.3 Mac OSX下通过Homebrew安装
+#### 10.2.4 Mac 下通过port 命令安装
+#### 10.2.5 命令行安装
+#### 10.2.6 spring boot CLI 快速入门
+### 10.3 从spring boot早期版本升级
+## 11.开发你的第一个spring boot应用
+### 11.1 创建POM文件
+### 11.2 添加依赖
+### 11.3 编写代码
+#### 11.3.1 @RestController注解和@RequestMapping注解
+#### 11.3.2 @EnableAutoConfiguration注解
+#### 11.3.2 @EnableAutoConfiguration注解
+#### 11.3.3 main方法
+### 11.4 运行示例
+### 11.5 创建一个可执行jar
+## 12.接下来阅读什么
+# 第三部分 使用spring boot
+## 13 构建系统
+### 13.1 依赖管理
+### 13.2 Maven
+## 15 配置类
+### 15.1 引入其他配置类
+### 15.2 引入XML配置
+## 16 自动配置
+# 第四部分 spring boot 特性
+## 23 SpringApplication
+### 23.1 启动失败
+### 23.2 自定义启动Banner
+### 23.3 自定义SpringApplication
+### 23.4 流式构建器API
+### 23.5 应用程序事件监听器
+### 23.6 Web环境
+### 23.7 访问应用程序变量
+### 23.8 使用ApplicationRunner和CommandLineRunner
+### 23.9 退出应用程序
+### 23.10 Admin特性
+## 24 外部化配置
+### 24.1 配置随机值
+### 24.2 访问命令行属性
+### 24.3 应用程序属性文件
+### 24.4 配置文件特定的属性
+### 24.5 属性文件占位符
+### 24.6 使用YAML配置文件
+#### 24.6.1 加载YAML
+#### 24.6.2 将YAML作为Spring环境中的属性
+#### 24.6.3 Multi-profile YAML文档
+#### 24.6.4 YAML配置的缺点
+#### 24.6.5 合并YAML
+### 24.7 类型安全的配置属性
+#### 24.7.1 第三方配置
+#### 24.7.2 宽松绑定
+#### 24.7.3 属性转换
+#### 24.7.4 @ConfigurationProperties验证
+## 25 Profile配置
+#### 25.1 添加激活的profiles
+### 25.2 通过编程设置profiles
+### 25.3 Profile-specific配置文件
+## 26 日志
+### 26.1 日志格式
+### 26.2 控制台输出日志
+#### 26.2.1 日志彩色编码输出
+### 26.3 文件日志输出
+### 26.4 日志级别
+### 26.5 自定义日志配置
+## 27 开发Web应用
+### 27.1 Spring Web MVC框架
+#### 27.1.1 Spring MVC自动配置
+#### 27.1.2 HttpMessageConverters
+#### 27.1.3 自定义JSON序列化和反序列化
+#### 27.1.4 MessageCodesResolver
+#### 27.1.5 静态内容
+#### 27.1.6 自定义ICON
+#### 27.1.7 ConfigurableWebBindingInitializer
+#### 27.1.8 模版引擎
+#### 27.1.9 错误处理
+#### 27.1.10 Spring HATEOAS
+#### 27.1.11 CORS的支持
+### 27.2 JAX-RS和Jersey
+### 27.3 嵌入式Servlet容器
+#### 27.3.1 Servlets, Filters, and listeners
+#### 27.3.2 Servlet Context初始化
+#### 27.3.3 EmbeddedWebApplicationContext
+#### 27.3.4 自定义嵌入式servlet容器
+### 27.3.5 JSP的局限
+## 28 Security
+
+# 第六部分 部署spring boot应用
+## 58云环境下部署spring boot应用
+### 58.1 Cloud Foundry
+#### 58.1.1 绑定服务
+### 58.2 Heroku
+### 58.3 OpenShift
+### 58.4.1 AWS Elastic Beanstalk
+#### 58.4.2 Summary
+### 58.5 Boxfuse和Amazon Web Services
+##59 安装Spring Boot应用
+### 59.1 Unix/Linux服务
+#### 59.1.1 安装为init.d服务(System V)
+#### 59.1.2 安装为Systemd服务
+#### 59.1.3 自定义启动脚本
+#### 59.2 Microsoft Windows服务
+## 60 接下来阅读什么
+
 # 第一部分 spring boot 文档结构
 
 第一部分简要介绍Spring Boot参考文档的组成结构。 可以将第一部分视为文档其余部分的地图。 您可以从头到尾以线性方式阅读本参考指南，或者可以跳过您不感兴趣的部分。
@@ -370,7 +493,7 @@ Java version: 1.7.0_51, vendor: Oracle Corporation
 ```
 > 注：该示例需要创建单独的文件夹，后续的操作假设你已创建一个合适的文件夹，并且将它当作你的“当前目录”。
 
-## 11.1 创建POM文件
+### 11.1 创建POM文件
 
 我们从创建Maven的pom.xml开始。因为pom.xml是构建项目的清单。打开你最喜欢的文本编辑器，并添加以下内容：
 
@@ -448,7 +571,7 @@ public class Example {
 ```
 
 尽管代码不多，但程序已经可以正确运行来，让我们逐步分析重要的部分吧！
-#### 11.3.1 @RestController注解and @RequestMapping注解
+#### 11.3.1 @RestController注解和@RequestMapping注解
 Example类上使用的第一个注解是@RestController，这是一个原（stereotype）注解。它为阅读代码的人提供暗示（这是一个支持REST的控制器），对于Spring，该类扮演了一个特殊角色。在本示例中，我们的类是一个web@Controller，所以当web请求进来时，Spring会考虑是否使用它来处理。
 
 @RequestMapping注解提供路由信息，它告诉Spring任何来自"/"路径的HTTP请求都应该被映射到home方法。@RestController注解告诉Spring以字符串的形式渲染结果，并直接返回给调用者。
@@ -571,6 +694,18 @@ spring boot依赖关系列表包含了spring的所有组件和精细化的第三
 
 ### 13.2 Maven
 
+## 15 配置类
+Spring Boot支持基于Java的配置。 虽然可以在SpringApplication.run()指定XML配置文件的入口地址，但我们通常建议使用@Configuration注解的配置类。 通常，定义main方法的类也是一个很好的候选配置类，因为定义main方法的类会被@Configuration修饰。
+
+> 注意：网上提供的Spring示例程序都是基于XML配置的。 如果有可能，尽可能替换成基于Java的同等配置。 寻找等价java配置的方法很简单，通常是查找以Enable*开头的注解即可。
+
+### 15.1 引入其他配置类
+一般我们不想把所有的配置都放到一个@Configuration注解的类中。这时可以通过@Import注解来导入其他配置类。 或者，可以使用@ComponentScan自动获取所有Spring组件，包括@Configuration类。
+### 15.2 引入XML配置
+当你的应用程序必须使用基于XML的配置时，我们仍然建议您定义一个@Configuration注解修饰的配置类。 然后可以使用额外的@ImportResource注解来加载这个XML配置文件。
+
+## 16 自动配置
+
 # 第四部分 spring boot 特性
 
 本部分深入介绍Spring Boot的细节。 通过本部分的学习，您可以了解在开发过程中即将应用到的spring boot的关键特性。 如果你还没有了解这些特性，您可能需要阅读第二部分“spring boot入门”和第三部分“使用spring boot”部分，以便您对spring boot有一个基础的了解。
@@ -656,12 +791,13 @@ ${application.title}|在MANIFEST.MF中声明的应用程序标题。 例如：Im
 打印的Banner将以名称springBootBanner注册为单例bean。
 
 > YAML格式的配置文件用off代表禁止打印Banner，所以如果要禁用应用程序中的Banner，请确保为off添加引号。
-> 
- ```
+
+```
 spring:
     main:
         banner-mode: "off"
-        
+```
+ 
 ### 23.3 自定义SpringApplication
 如果系统默认的SpringApplication不能满足你的需求，你可以自定义SpringApplication。例如：想关闭Banner，你可以通过以下自定义SpringApplication来实现：
 
@@ -1159,7 +1295,7 @@ public class FooProperties {
 这种配置方式与SpringApplication外部的YAML配置相当：
 
 ```
-#application.yml
+ #application.yml
 
 foo:
     remote-address: 192.168.1.1
@@ -1169,7 +1305,7 @@ foo:
           - USER
           - ADMIN
 
-#additional configuration as required
+ #additional configuration as required
 ```
 
 要使用@ConfigurationProperties bean，您可以像其他任何bean一样注入它们。
@@ -1356,6 +1492,7 @@ Spring Boot使用Commons Logging进行所有内部日志记录，但底层日志
 > 有很多可用于Java的日志记录框架。 如果上面的列表看起来很混乱，别担心。 一般来说，您不需要更改日志依赖关系，并且一般情况下Spring Boot的默认日志配置将正常工作。
 
 ### 26.1 日志格式
+
 Spring Boot的默认日志输出格式如下：
 
 ```
@@ -1364,6 +1501,7 @@ Spring Boot的默认日志输出格式如下：
 2014-03-05 10:57:51.253  INFO 45469 --- [ost-startStop-1] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 1358 ms
 2014-03-05 10:57:51.698  INFO 45469 --- [ost-startStop-1] o.s.b.c.e.ServletRegistrationBean        : Mapping servlet: 'dispatcherServlet' to [/]
 2014-03-05 10:57:51.702  INFO 45469 --- [ost-startStop-1] o.s.b.c.embedded.FilterRegistrationBean  : Mapping filter: 'hiddenHttpMethodFilter' to: [/*]
+
 ```
 
 输出的日志包括如下几个部分：
@@ -1515,6 +1653,7 @@ public class MyRestController {
     }
 
 }
+
 ```
 
 Spring MVC是核心Spring Framework的一部分，详细信息可参阅参考文档。 Spring.io / guide中还有几个指南可供Spring MVC使用。
@@ -1951,8 +2090,12 @@ Using default security password: 78fa095d-3f4c-48b1-ad50-e24c31d5cf35
 
 > 默认情况下，WebSecurityConfigurerAdapter将匹配任何路径。 如果您不想完全覆盖Spring Boot自动配置的访问规则，则适配器必须显式配置您要覆盖的路径。
 
+
 ### 28.1 OAuth2
+
 # 第五部分 spring boot 执行器：产品上线特性
+
+
 # 第六部分 部署spring boot应用程序
 Spring Boot灵活的打包命令选项为部署应用程序提供了很多便利的选择。 您可以轻松地将Spring Boot应用程序部署到各种云平台，容器映像（如Docker）或虚拟/真实机器上。
 
@@ -1970,6 +2113,7 @@ Spring Boot的可执行jar是为大多数流行的云PaaS（平台即服务）�
 Cloud Foundry提供默认的buildpacks，如果没有指定其他buildpack，则可以使用默认buildpacks。 Cloud Foundry Java buildpack为Spring应用程序提供了极好的支持，包括Spring Boot。 您可以部署独立的可执行jar应用程序，以及传统的.war包应用程序。
 
 一旦构建了应用程序（使用例如mvn clean package）并安装了cf命令行工具，只需使用cf push命令部署应用程序，将其替换为编译的.jar路径。 在推送应用程序之前，请务必使用您的cf命令行客户端登录。
+
 
 ```
 $ cf push acloudyspringtime -p target/demo-0.0.1-SNAPSHOT.jar
@@ -2101,10 +2245,14 @@ Total 95 (delta 31), reused 0 (delta 0)
 
 To git@heroku.com:agile-sierra-1405.git
  * [new branch]      master -> master
+ 
+ 
 ```
 
 您的应用程序现在应该在Heroku上运行了。
+
 ### 58.3 OpenShift
+
 OpenShift是RedHat公共（和企业）PaaS解决方案。 像Heroku一样，它通过运行由git提交触发的脚本来起作用，因此，只要Java运行时可用，您就可以按照任何您喜欢的方式来编写Spring Boot应用程序的启动（这是您可以要求的标准功能OpenShift）。 为了做到这一点，你可以使用自己的盒子和钩子在你的仓库.openshift / action_hooks：
 
 基本模式是：
@@ -2113,7 +2261,7 @@ OpenShift是RedHat公共（和企业）PaaS解决方案。 像Heroku一样，它
 1. 使用构建钩来构建您的jar（使用Maven或Gradle），例如：
 
 ```
-#!/bin/bash
+ #!/bin/bash
 cd $OPENSHIFT_REPO_DIR
 mvn package -s .openshift/settings.xml -DskipTests=true
 ```
@@ -2232,6 +2380,7 @@ Deployment completed successfully. axelfontaine/myapp:1.0 is up and running at h
 这里有篇[在EC2部署Spring Boot应用](https://boxfuse.com/blog/spring-boot-ec2.html)的博客，Boxfuse官网也有[Boxfuse集成Spring Boot文档](https://boxfuse.com/docs/payloads/springboot.html)，你可以拿来作为参考。
 ### 58.6 Google App Engine
 Google App Engine与Servlet 2.5 API绑定在一起，因此您无法在某些情况下部署Spring应用程序。 请参阅本指南的Servlet 2.5部分。
+
 ##59 安装Spring Boot应用
 除了使用java -jar运行Spring Boot应用程序外，还可以为Unix系统完成可执行的应用程序。 这使得在常见的生产环境中安装和管理Spring Boot应用程序非常容易。
 
@@ -2372,13 +2521,6 @@ mode|脚本模式，默认为`auto`
 
 #### 59.2 Microsoft Windows服务
 在Window上，你可以使用[winsw](https://github.com/kohsuke/winsw)启动Spring Boot应用。这里有个单独维护的[示例](https://github.com/snicoll-scratches/spring-boot-daemon)为你演示了怎么一步步为Spring Boot应用创建Windows服务。
-
-
-
-
-
-
-
 
 
 ## 60 接下来阅读什么
